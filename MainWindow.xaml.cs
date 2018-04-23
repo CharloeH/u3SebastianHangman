@@ -28,9 +28,9 @@ namespace u3HangmanSebastian
     /// </summary>
     public partial class MainWindow : Window
     { 
-        string[] wrong = new string[6]; 
-        string[] word = new string[25];
-        string[] guessed = new string[10];
+        string[] incorrectGuessed = new string[5]; 
+        string[] word = new string[10];
+        string[] correctGuessed = new string[10];
         int RNG = 0;
         int counter = 5;
         int letters = 0;
@@ -93,7 +93,7 @@ namespace u3HangmanSebastian
                 //check correct letters
                 if (guessedLetter == word[i])
                 {
-                    guessed[i] = guessedLetter;
+                    correctGuessed[i] = guessedLetter;
                     CreateLabel(i, guessedLetter);
                 }
                 //check for whole word winner
@@ -107,8 +107,8 @@ namespace u3HangmanSebastian
                 if (!wordUsed.Contains(guessedLetter))
                 {
                     counter--;
-                    wrong[i] = guessedLetter;
-                    lblWrong = lblWrong + wrong[i];
+                    incorrectGuessed[i] = guessedLetter;
+                    lblWrong = lblWrong + incorrectGuessed[i];
                     lblWrongLetters.Content = lblWrong;
                     i = wordUsed.Length;
                     if (counter != 0)
@@ -126,7 +126,7 @@ namespace u3HangmanSebastian
             //check for letter winner
             if (winnerCheck == 0)
             {
-                wordrecreated = guessed[0] + guessed[1] + guessed[2] + guessed[3] + guessed[4] + guessed[5] + guessed[6] + guessed[7] + guessed[8];
+                wordrecreated = correctGuessed[0] + correctGuessed[1] + correctGuessed[2] + correctGuessed[3] + correctGuessed[4] + correctGuessed[5] + correctGuessed[6] + correctGuessed[7] + correctGuessed[8];
                 if (wordrecreated == wordUsed)
                 {
                     MessageBox.Show("You win!");
