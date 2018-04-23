@@ -57,12 +57,15 @@ namespace u3HangmanSebastian
             wordLabel.Content = content;
             Canvas.SetTop(wordLabel, 80);
             Canvas.SetLeft(wordLabel, (223 + (i * 10)));
-            myCanvas.Children.Add(wordLabel);
+            myCanvas2.Children.Add(wordLabel);
         }
         private void StartProgram(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Welcome to hangman! A random word will be selected and you must find it. You can guess with LOWER CASE LETTERS or WORDS. If you guess more than 5 wrong letters or words you lose! good luck.");
+            streamReader.DiscardBufferedData();
+            streamReader.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
+            //MessageBox.Show("Welcome to hangman! A random word will be selected and you must find it. You can guess with LOWER CASE LETTERS or WORDS. If you guess more than 5 wrong letters or words you lose! good luck.");
             RNG = random.Next(0, 9);//each word is attached to a number
+            MessageBox.Show(RNG.ToString());
             while (!streamReader.EndOfStream)
             {
                 line = streamReader.ReadLine();
@@ -110,7 +113,7 @@ namespace u3HangmanSebastian
                 {
                     counter--;
                     incorrectGuessed[i] = guessedLetter;
-                    lblWrong = lblWrong + incorrectGuessed[i];
+                    lblWrong = lblWrong + incorrectGuessed[i] + " ";
                     lblWrongLetters.Content = lblWrong;
                     i = wordUsed.Length;
                     if (counter != 0)
@@ -140,7 +143,15 @@ namespace u3HangmanSebastian
 
         }
 
-
+        private void Reset(object sender, RoutedEventArgs e)
+        {
+            myCanvas2.Children.Clear();
+            for (int i = 0; i < 10; i++)
+            {
+                word[i] = null;
+                line = null;
+            }
+        }
     }
 }
 
