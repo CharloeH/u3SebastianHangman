@@ -27,13 +27,12 @@ namespace u3HangmanSebastian
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    { 
-        string[] incorrectGuessed = new string[5]; 
+    {
+        string[] incorrectGuessed = new string[5];
         string[] word = new string[10];
         string[] correctGuessed = new string[10];
         int RNG = 0;
         int counter = 5;
-        int letters = 0;
         int winnerCheck = 0;
         string wordUsed = null;
         string wordrecreated = null;
@@ -46,27 +45,30 @@ namespace u3HangmanSebastian
         public MainWindow()
         {
             InitializeComponent();
-           
+            ImageBrush thisTownAintBigEnoughForTheTwoOfUs = new ImageBrush();
+            thisTownAintBigEnoughForTheTwoOfUs.ImageSource = new BitmapImage(new Uri
+               ("http://moziru.com/images/wild-west-clipart-background-1.jpg"));
+            myCanvas.Background = thisTownAintBigEnoughForTheTwoOfUs;
         }
         //label method
         private void CreateLabel(int i, string content)
         {
             Label wordLabel = new Label();
             wordLabel.Content = content;
-            Canvas.SetTop(wordLabel, 92);
-            Canvas.SetLeft(wordLabel, (235 + (i * 10)));
+            Canvas.SetTop(wordLabel, 80);
+            Canvas.SetLeft(wordLabel, (223 + (i * 10)));
             myCanvas.Children.Add(wordLabel);
         }
-
-            private void StartProgram(object sender, RoutedEventArgs e)
+        private void StartProgram(object sender, RoutedEventArgs e)
         {
-             RNG = random.Next(0, 9);//each word is attached to a number
+            MessageBox.Show("Welcome to hangman! A random word will be selected and you must find it. You can guess with LOWER CASE LETTERS or WORDS. If you guess more than 5 wrong letters or words you lose! good luck.");
+            RNG = random.Next(0, 9);//each word is attached to a number
             while (!streamReader.EndOfStream)
             {
                 line = streamReader.ReadLine();
                 //checking which word is being used
                 if (line.Contains(RNG.ToString()))
-                {   
+                {
                     this.wordUsed = line.Substring(line.IndexOf(RNG.ToString()) + 2, line.Length - 2);//removing the number
                 }
 
@@ -75,14 +77,14 @@ namespace u3HangmanSebastian
             for (int i = 0; i < wordUsed.Length; i++)
             {
                 word[i] = wordUsed.Substring(i, 1);
-                
+
             }
             //loopp that create equally as many underscores
             for (int i = 0; i < wordUsed.Length; i++)
             {
                 CreateLabel(i, "_");
             }
-          
+
         }
 
         private void GuessLetters(object sender, RoutedEventArgs e)
@@ -113,7 +115,7 @@ namespace u3HangmanSebastian
                     i = wordUsed.Length;
                     if (counter != 0)
                     {
-                        MessageBox.Show("incorrect! you have " + counter.ToString() + " guesses remaining");
+                        MessageBox.Show("Your guess of " +"\"" + txtGuess.Text + "\"" +  " was incorrect! You have " + counter.ToString() + " guesses remaining");
                     }
                     //check for loss
                     if (counter == 0)
@@ -121,7 +123,7 @@ namespace u3HangmanSebastian
                         MessageBox.Show("You lose! The word you were looking for was: " + wordUsed);
                     }
                 }
-                
+
             }
             //check for letter winner
             if (winnerCheck == 0)
@@ -138,8 +140,8 @@ namespace u3HangmanSebastian
 
         }
 
-       
-        }
+
     }
+}
 
 
