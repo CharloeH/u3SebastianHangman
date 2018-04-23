@@ -61,11 +61,8 @@ namespace u3HangmanSebastian
         }
         private void StartProgram(object sender, RoutedEventArgs e)
         {
-            streamReader.DiscardBufferedData();
-            streamReader.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
             //MessageBox.Show("Welcome to hangman! A random word will be selected and you must find it. You can guess with LOWER CASE LETTERS or WORDS. If you guess more than 5 wrong letters or words you lose! good luck.");
             RNG = random.Next(0, 9);//each word is attached to a number
-            MessageBox.Show(RNG.ToString());
             while (!streamReader.EndOfStream)
             {
                 line = streamReader.ReadLine();
@@ -145,6 +142,8 @@ namespace u3HangmanSebastian
 
         private void Reset(object sender, RoutedEventArgs e)
         {
+            streamReader.DiscardBufferedData();
+            streamReader.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
             myCanvas2.Children.Clear();
             for (int i = 0; i < 10; i++)
             {
